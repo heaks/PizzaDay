@@ -1,0 +1,112 @@
+<template name="eventEntity">
+		<div class="container">
+				<h3>Welcome to the new event</h3>
+				<div class="event-info row">
+						<div class="general-info col-md-6">
+								<h3>Event Info:</h3>
+								<p>Event name: {{eventName}}</p>
+								<p>Creation time: {{showDate}}</p>
+								<p>Owner: {{eventOwnerName}}</p>
+								<p>Group: {{groupName}}</p>
+						<p>
+								Status: {{status}}
+
+								<!--"Change status", "Delete event" and "Send E-mails" buttons are avaible for owner only-->
+								{{#if checkOwner}}
+										<div class="dropdown">
+												<button class="btn btn-primary dropdown-toggle" type="button" id="change-status"
+												        data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+														Change status
+														<span class="caret"></span>
+												</button>
+												<ul class="dropdown-menu" aria-labelledby="change-status">
+														<li><a href="#" class="event-status-change">Ordering</a></li>
+														<li><a href="#" class="event-status-change">Ordered</a></li>
+														<li><a href="#" class="event-status-change">Delivering</a></li>
+														<li><a href="#" class="event-status-change">Delivered</a></li>
+												</ul>
+										</div>
+
+										<div class="group-button">
+												<button class="delete-event btn btn-danger">Delete this event <i class="fa fa-trash"></i></button>
+										</div>
+
+										{{#if emailsAreSent}}
+												<div class="group-button">
+														<button class="btn btn-success send-email" disabled>E-mails were sent</button>
+												</div>
+										{{else}}
+												<div class="group-button">
+														<button class="btn btn-success send-email">Send E-mails</button>
+												</div>
+										{{/if}}
+
+										{{else}}
+										<div class="group-button">
+												<button class="quit-event btn btn-danger">Quit this event <i class="fa fa-trash"></i></button>
+										</div>
+
+								{{/if}}
+								</p>
+						</div>
+						<div class="participants-info col-md-5">
+								<h3>Participants:</h3>
+
+										{{#each participants}}
+												{{>eventParticipant user=this eventInfo=eventInfo}}
+										{{/each}}
+
+						</div>
+				</div>
+				<hr>
+
+				{{#if isConfirmed}}
+						<div class="alert alert-success" role="alert">You confirmed you order</div>
+				{{else}}
+						<div class="alert alert-warning" role="alert">You haven't confirmed your order</div>
+				{{/if}}
+
+				{{#if allUsersConfirmed}}
+						<div class="alert alert-success" role="alert">All users confirmed their orders</div>
+				{{/if}}
+
+				{{#if isConfirmed}}
+						<div class="group-button freeze">
+								<button class="btn btn-default">Confirmed</button>
+						</div>
+				{{else}}
+						<div class="group-button">
+								<button class="participate btn btn-default">Confirm</button>
+						</div>
+				{{/if}}
+
+				<div class="row">
+						<div class="col-md-6">
+								<table class="table-striped table-hover freeze">
+										<caption>Restaurant Menu</caption>
+										<thead>
+										<tr>
+												<td>Name</td>
+												<td>Price</td>
+												<td>Number</td>
+												<td>Order</td>
+										</tr>
+										</thead>
+										<tbody>
+										{{#each menuItems}}
+												{{>eventMenuItem}}
+										{{/each}}
+										</tbody>
+								</table>
+
+						</div>
+						<div class="col-md-6 freeze">
+								<div class="row">
+										{{#each participants}}
+												{{>order}}
+										{{/each}}
+								</div>
+						</div>
+				</div>
+		</div>
+</template>

@@ -1,0 +1,32 @@
+<template name="group">
+
+		    {{#if checkAccess}}
+				    <a href="{{pathFor 'groupPage' _id=_id}}">
+						    <div class="list-group">
+								    <div class="list-group-item row">
+										    <div class="group-logo col-lg-2 col-md-2 col-sm-3">
+												    <img src="{{groupIcon}}" class="logo-img">
+										    </div>
+										    <div class="col-lg-6 col-md-4 col-sm-4">
+												    <h4 class="list-group-item-heading">{{groupName}}</h4>
+												    <p class="list-group-item-text">{{description}}</p>
+												    <p class="list-group-item-text">Creation Date: {{showDate}}</p>
+										    </div>
+								    </div>
+						    </div>
+				    </a>
+      {{else}}
+				    <div class="list-group">
+						    <div class="list-group-item row">
+								    <div class="group-logo col-lg-2 col-md-2 col-sm-3">
+										    <img src="{{groupIcon}}" class="logo-img">
+								    </div>
+								    <div class="col-lg-6 col-md-4 col-sm-4">
+										    <h4 class="list-group-item-heading">{{groupName}}</h4>
+										    <p class="list-group-item-text">{{description}}</p>
+										    <p class="list-group-item-text">Creation Date: {{showDate}}</p>
+								    </div>
+						    </div>
+				    </div>
+      {{/if}}
+</template>

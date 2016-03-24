@@ -1,0 +1,68 @@
+/*for tables*/
+th, td {
+    padding: 0.25rem;
+    text-align: left;
+    border: 1px solid #ccc;
+}
+
+table thead{
+    font-weight: bold;
+    width: 75%;
+}
+
+.created-groups{
+    margin-top: 50px;
+}
+
+.registered-users{
+    margin: 50px;
+}
+
+.groups{
+    margin: 50px;
+}
+
+.group-button{
+    margin-top: 30px;
+}
+
+.logo-img{
+    height: 150px;
+    width: 140px;
+}
+
+.event-info{
+    border: 1px solid black;
+}
+
+.general-info{
+    border: 1px solid black;
+    margin: 4px;
+}
+
+.participants-info{
+    border: 1px solid black;
+    margin: 5px;
+}
+
+.box{
+    border: 1px solid black;
+    border-radius: 10px;
+    padding:5px;
+}
+
+.ready-status{
+    background: #00aa00;
+    border-radius: 3px;
+    font-size: 12px;
+    padding: 3px;
+    color: #ffffff;
+}
+
+.not-ready-status{
+    background: #ff9900;
+    border-radius: 3px;
+    font-size: 12px;
+    padding: 3px;
+    color: #ffffff;
+}

@@ -1,0 +1,18 @@
+<template name="groups">
+    <div class="groups">
+		    {{#if currentUser}}
+		      {{>popUpForm}}
+		    {{/if}}
+		    <div class="created-groups">
+				    <div class="list-group">
+						    <div class="list-group-item active">
+								    <h4 class="list-group-item-heading">Avaible groups</h4>
+								    <p class="list-group-item-text">choose the group</p>
+						    </div>
+		       </div>
+				      {{#each groupCount}}
+				          {{>group}}
+				      {{/each}}
+		    </div>
+    </div>
+</template>

@@ -1,0 +1,12 @@
+<template name="order">
+				<div class="thumbnail">
+						<div class="caption">
+								<h3>{{profile.name}} Orders:</h3>
+										{{#each orderItems}}
+												{{>orderItem}}
+										{{/each}}
+								Total price: {{totalPrice}}
+
+						</div>
+				</div>
+</template>

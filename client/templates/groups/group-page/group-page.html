@@ -1,0 +1,67 @@
+<template name="groupPage">
+		<div class="container">
+				{{>group}}
+
+				<div class="row">
+						<div class="col-md-6">
+								<p>Group participants:</p>
+								{{#each groupParticipants}}
+										{{>participant}}
+								{{/each}}
+								<div class="group-button">
+										<button class="create-event btn btn-primary">Create new event <i class="fa fa-cutlery"></i></button>
+										<input id="event-name" class="form-control" type="text" placeholder="Enter event name">
+								</div>
+
+
+
+								{{#if checkOwner}}
+										<div class="group-button">
+												<button class="add-user btn btn-primary">Add user to group <i class="fa fa-plus-circle"></i></button>
+												<input id="user-email" class="form-control" type="text" placeholder="write e-mail here">
+										</div>
+
+										<div class="group-button">
+												<button class="remove-user btn btn-danger">Remove user from group <i class="fa fa-ban"></i></button>
+												<input id="remove-user-email" class="form-control" type="text" placeholder="write e-mail here">
+										</div>
+
+										<div class="group-button">
+												<button class="delete-group btn btn-danger">Delete this group <i class="fa fa-trash"></i></button>
+										</div>
+								{{/if}}
+
+								<div class="group-button">
+										{{>popUpItems}}
+										<table class="table-striped table-hover">
+												<caption>Restaurant Menu</caption>
+												<thead>
+												<tr>
+														<td>Name</td>
+														<td>Price</td>
+														<td>Remove</td>
+												</tr>
+												</thead>
+												<tbody>
+												{{#each menuItems}}
+														{{>item}}
+												{{/each}}
+												</tbody>
+										</table>
+								</div>
+						</div>
+						<div class="col-md-6">
+								<h3>Current events:</h3>
+								{{#if groupEvents}}
+										{{#each groupEvents}}
+												{{>eventLink}}
+										{{/each}}
+								{{else}}
+										<p>No events found</p>
+								{{/if}}
+						</div>
+				</div>
+
+
+		</div>
+</template>
