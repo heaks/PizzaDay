@@ -178,16 +178,59 @@ Meteor.methods({
     deleteOrder: function(orderId){
         Orders.remove(orderId);
     },
-    sendMailgunEmail: function(to, from, subject, text){
+    sendEmailUsingBlaze: function (to, from, subject, data) {
+        var html = SSR.render("customerCheck", data);
         this.unblock();
         Email.send({
             to: to,
             from: from,
             subject: subject,
-            text: text
+            html: html
         });
     },
     confirmOrder: function(eventId){
         Confirmations.update({event: eventId, user: Meteor.userId()}, {$set:{confirmed: true}})
+    },
+    initiateEmailSending: function(eventId){
+        var event = Events.findOne(eventId);
+        var participants = event.eventParticipants;
+
+        participants.forEach(function(element, index){
+            var orders = Orders.find({customer: element, event: eventId});
+            var orderSummary = [];
+            var totalPrice = 0;
+
+            //We need array with orders(object) for every event participant
+            orders.forEach(function(element, index){
+                var item = Items.findOne({_id: element.itemId});
+                orderSummary.push({
+                    name : item.name,
+                    price : item.price,
+                    quantity: element.quantity
+                });
+
+                //also we need total price of all orders "totalPrice"
+                totalPrice += item.price * element.quantity;
+            });
+
+            var text = "<p>You ordered: </p>";
+
+            orderSummary.forEach(function(order){
+                text += "<p>" + order.quantity + " x " + order.name + " for " + order.price + " each" + "</p>";
+            });
+            text += "<p>Total Price:" + totalPrice + "<p>";
+
+            var to = Meteor.users.findOne({_id: element}).services.google.email;
+            var subject = "Pizza day";
+            var from = "heaksdev@gmail.com";
+
+            //now when we have user's order and total price we can call out method Email.send
+            //Meteor.call("sendMailgunEmail", to, from, subject, text);
+
+            //Using Blaze rendering
+            var data = {orders: orderSummary, totalPrice: totalPrice};
+            //var html = Blaze.toHTMLWithData(Template.customerCheck, data);
+            Meteor.call("sendEmailUsingBlaze", to, from, subject, data);
+        });
     }
 });

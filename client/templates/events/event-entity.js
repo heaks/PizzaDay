@@ -84,19 +84,11 @@ Template.eventEntity.events({
 		},
 		"click .send-email": function(){
 				if(Template.instance().checkIfAllUsersConfirmed()){
-						//to, from, subject, text
-						var to = "victor.vyshnevsky64@gmail.com";
-						var from = "heaksdev@gmail.com";
-						var subject = "PizzaDay";
-						var text = "welcome";
-						Meteor.call("sendMailgunEmail", to, from, subject, text, function(error){
-								if( error ){
-										alert( error );
+						Meteor.call("initiateEmailSending", this._id, function(error, result){
+								if(error){
+										alert(error);
 								}
 						});
-						Template.instance().emailStatus.set(true);
-				} else {
-						alert("Not all users confirmed their orders")
 				}
 		},
 		"click .quit-event": function(){
