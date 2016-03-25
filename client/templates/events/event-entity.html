@@ -1,6 +1,7 @@
 <template name="eventEntity">
 		<div class="container">
-				<h3>Welcome to the new event</h3>
+				<button class="btn btn-primary back-button"><i class="fa fa-arrow-circle-left"></i></button>
+				<span class="welcome-text">Welcome to the new event</span>
 				<div class="event-info row">
 						<div class="general-info col-md-6">
 								<h3>Event Info:</h3>
@@ -61,8 +62,7 @@
 				<hr>
 
 				<div class="well">
-						<p>Hint: Please confirm your orders only when all expected participants have joined
-						this event, otherwise event status will be changed and nobody will be able to join this event</p>
+						<p>Hint: Please confirm your orders only when all expected participants have joined this event</p>
 				</div>
 
 				{{#if isConfirmed}}
@@ -95,6 +95,7 @@
 												<td>Price</td>
 												<td>Number</td>
 												<td>Order</td>
+												<td>Coupon</td>
 										</tr>
 										</thead>
 										<tbody>
@@ -110,6 +111,7 @@
 										{{#each participants}}
 												{{>order}}
 										{{/each}}
+										{{>couponItems}}
 								</div>
 						</div>
 				</div>

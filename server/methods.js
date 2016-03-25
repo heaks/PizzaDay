@@ -119,7 +119,8 @@ Meteor.methods({
             menu: menu,
             eventOwner: owner,
             eventParticipants: [owner],
-            confirmedParticipants: []
+            confirmedParticipants: [],
+            couponItems: []
         };
         var eventId = Events.insert(properties);
 
@@ -167,13 +168,20 @@ Meteor.methods({
     deleteItem(itemId){ //Fixing
         Items.remove({_id:itemId});
     },
-    orderItem: function(userId, eventId, itemId, quantity){
+    orderItem: function(eventId, itemId, quantity){
         Orders.insert({
-            customer: userId,
+            customer: Meteor.userId(),
             event: eventId,
             itemId: itemId,
             quantity: quantity
         });
+    },
+    orderItemCoupon: function(eventId, itemId, quantity){
+        var newCouponItems = {itemId: itemId, quantity: quantity};
+        Events.update({_id: eventId}, {$push: {couponItems: newCouponItems}});
+    },
+    deleteItemsCoupon: function(eventId){
+        Events.update({_id: eventId}, {$set: {couponItems: []}});
     },
     deleteOrder: function(orderId){
         Orders.remove(orderId);
@@ -188,12 +196,39 @@ Meteor.methods({
             html: html
         });
     },
+    sendEmailToOwner: function(to, from, subject, data){
+        var html = SSR.render("ownerCheck", data);
+        this.unblock();
+        Email.send({
+            to: to,
+            from: from,
+            subject: subject,
+            html: html
+        });
+    },
     confirmOrder: function(eventId){
         Confirmations.update({event: eventId, user: Meteor.userId()}, {$set:{confirmed: true}})
     },
     initiateEmailSending: function(eventId){
+        //All we need here is to send 2 types of emails:
+        //The first one for all event participants which contains orders and total price for participant
+        //The second one for event owner which contains all items he needs to order and total price
         var event = Events.findOne(eventId);
         var participants = event.eventParticipants;
+        var couponItems = [];
+        var coupons = event.couponItems;
+
+        coupons.forEach(function(element, index){
+            var itemName = Items.findOne({_id: element.itemId}).name;
+            couponItems.push({name: itemName, quantity: element.quantity});
+        });
+
+        //couponItems, quantity, name
+        var totalEventPrice = 0; //Total price from all participants
+        var totalEventOrder = []; //All orders from all participants
+        var subject = "Pizza day";
+        var from = "heaksdev@gmail.com";
+        var eventOwnerEmail = Meteor.users.findOne({_id: event.eventOwner}).services.google.email;
 
         participants.forEach(function(element, index){
             var orders = Orders.find({customer: element, event: eventId});
@@ -203,7 +238,16 @@ Meteor.methods({
             //We need array with orders(object) for every event participant
             orders.forEach(function(element, index){
                 var item = Items.findOne({_id: element.itemId});
+
+                //summary for every participant
                 orderSummary.push({
+                    name : item.name,
+                    price : item.price,
+                    quantity: element.quantity
+                });
+
+                //summary for owner
+                totalEventOrder.push({
                     name : item.name,
                     price : item.price,
                     quantity: element.quantity
@@ -211,26 +255,22 @@ Meteor.methods({
 
                 //also we need total price of all orders "totalPrice"
                 totalPrice += item.price * element.quantity;
+                console.log(totalPrice);
+
             });
-
-            var text = "<p>You ordered: </p>";
-
-            orderSummary.forEach(function(order){
-                text += "<p>" + order.quantity + " x " + order.name + " for " + order.price + " each" + "</p>";
-            });
-            text += "<p>Total Price:" + totalPrice + "<p>";
-
+            totalEventPrice += totalPrice;
+            console.log(totalEventPrice);
             var to = Meteor.users.findOne({_id: element}).services.google.email;
-            var subject = "Pizza day";
-            var from = "heaksdev@gmail.com";
-
-            //now when we have user's order and total price we can call out method Email.send
-            //Meteor.call("sendMailgunEmail", to, from, subject, text);
 
             //Using Blaze rendering
             var data = {orders: orderSummary, totalPrice: totalPrice};
-            //var html = Blaze.toHTMLWithData(Template.customerCheck, data);
             Meteor.call("sendEmailUsingBlaze", to, from, subject, data);
         });
+
+        //Alternative E-mail for event owner
+
+        var eventData = {orders: totalEventOrder, totalPrice: totalEventPrice ,couponItems: couponItems};
+        console.log(eventData);
+        Meteor.call("sendEmailToOwner", eventOwnerEmail, from, subject, eventData);
     }
 });

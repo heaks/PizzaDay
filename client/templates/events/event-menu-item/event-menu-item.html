@@ -10,7 +10,16 @@
 										<i class="fa fa-shopping-cart"></i>
 								</button>
 						</td>
-
-
+						<td>
+								{{#if owner}}
+										<button type="button" class="btn btn-primary order-item-coupon">
+												<i class="fa fa-ticket"></i>
+										</button>
+								{{else}}
+										<button type="button" class="btn btn-primary order-item-coupon" disabled>
+												<i class="fa fa-ticket"></i>
+										</button>
+								{{/if}}
+						</td>
 		</tr>
 </template>

@@ -66,3 +66,12 @@ table thead{
     padding: 3px;
     color: #ffffff;
 }
+
+.welcome-text{
+    font-size: 28px;
+    font-family: fantasy;
+}
+
+.back-button{
+    margin: 5px;
+}

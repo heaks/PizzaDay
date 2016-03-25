@@ -1,0 +1,15 @@
+<template name="couponItems">
+		<div class="thumbnail">
+				<div class="caption">
+						<h3>Coupon Items:</h3>
+						{{#if orders}}
+								{{#each orders}}
+										{{>couponItem}}
+								{{/each}}
+						{{else}}
+								<p>No coupons were used</p>
+						{{/if}}
+						<button class="btn btn-warning btn-xs delete-items-coupon">Clear items</button>
+				</div>
+		</div>
+</template>

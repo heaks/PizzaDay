@@ -89,6 +89,8 @@ Template.eventEntity.events({
 										alert(error);
 								}
 						});
+				} else {
+						alert("Not all participates confirmed their orders");
 				}
 		},
 		"click .quit-event": function(){
@@ -101,5 +103,8 @@ Template.eventEntity.events({
 								}
 						});
 				}
+		},
+		"click .back-button": function(){
+				Router.go("groupPage", {_id: this.group});
 		}
 });
