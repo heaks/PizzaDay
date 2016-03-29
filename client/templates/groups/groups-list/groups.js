@@ -1,5 +1,5 @@
 Template.groups.helpers({
-    groupCount: function(){
-        return CreatedGroups.find();
-    }
+	groupCount: function() {
+		return Groups.find();
+	}
 });

@@ -1,25 +1,23 @@
 <template name="eventMenuItem">
-		<tr>
-				<td>{{name}}</td>
-				<td>{{price}}</td>
-
-
-						<td><input type="number" class="item-number-value" min="1"></td>
-						<td>
-								<button type="button" class="btn btn-success order-item">
-										<i class="fa fa-shopping-cart"></i>
-								</button>
-						</td>
-						<td>
-								{{#if owner}}
-										<button type="button" class="btn btn-primary order-item-coupon">
-												<i class="fa fa-ticket"></i>
-										</button>
-								{{else}}
-										<button type="button" class="btn btn-primary order-item-coupon" disabled>
-												<i class="fa fa-ticket"></i>
-										</button>
-								{{/if}}
-						</td>
-		</tr>
+	<tr>
+		<td>{{name}}</td>
+		<td>{{price}}</td>
+		<td><input type="number" class="item-number-value" min="1"></td>
+		<td>
+			<button type="button" class="btn btn-success order-item">
+				<i class="fa fa-shopping-cart"></i>
+			</button>
+		</td>
+		<td>
+			{{#if owner}}
+				<button type="button" class="btn btn-primary order-item-coupon">
+					<i class="fa fa-ticket"></i>
+				</button>
+			{{else}}
+				<button type="button" class="btn btn-primary order-item-coupon" disabled>
+					<i class="fa fa-ticket"></i>
+				</button>
+			{{/if}}
+		</td>
+	</tr>
 </template>

@@ -5,53 +5,53 @@ th, td {
     border: 1px solid #ccc;
 }
 
-table thead{
+table thead {
     font-weight: bold;
     width: 75%;
 }
 
-.created-groups{
+.created-groups {
     margin-top: 50px;
 }
 
-.registered-users{
+.registered-users {
     margin: 50px;
 }
 
-.groups{
+.groups {
     margin: 50px;
 }
 
-.group-button{
+.group-button {
     margin-top: 30px;
 }
 
-.logo-img{
+.logo-img {
     height: 150px;
     width: 140px;
 }
 
-.event-info{
+.event-info {
     border: 1px solid black;
 }
 
-.general-info{
+.general-info {
     border: 1px solid black;
     margin: 4px;
 }
 
-.participants-info{
+.participants-info {
     border: 1px solid black;
     margin: 5px;
 }
 
-.box{
+.box {
     border: 1px solid black;
     border-radius: 10px;
-    padding:5px;
+    padding: 5px;
 }
 
-.ready-status{
+.ready-status {
     background: #00aa00;
     border-radius: 3px;
     font-size: 12px;
@@ -59,7 +59,7 @@ table thead{
     color: #ffffff;
 }
 
-.not-ready-status{
+.not-ready-status {
     background: #ff9900;
     border-radius: 3px;
     font-size: 12px;
@@ -67,11 +67,11 @@ table thead{
     color: #ffffff;
 }
 
-.welcome-text{
+.welcome-text {
     font-size: 28px;
     font-family: fantasy;
 }
 
-.back-button{
+.back-button {
     margin: 5px;
 }

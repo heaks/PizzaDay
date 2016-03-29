@@ -1,0 +1,15 @@
+<h3>Result: </h3>
+{{#each usersDebt}}
+	<p>User: {{user}} has to pay: {{debt}}</p>
+{{/each}}
+<h3>Items to order: </h3>
+{{#each orders}}
+	<p>{{quantity}} x {{name}}  price: {{price}} each</p>
+{{/each}}
+{{#if couponItems}}
+	<h3>Coupon items: </h3>
+	{{#each couponItems}}
+		<p>{{quantity}} x {{name}}</p>
+	{{/each}}
+{{/if}}
+<h2>Total price: {{totalPrice}}</h2>
